@@ -80,7 +80,7 @@ export async function getCustomer(id) {
 export async function getCustomersForSelect(state) {
     state.customers.loading = true;
     try {
-        await axiosClient.get('/customers/select')
+        await axiosClient.get('/customers-for-select')
         .then(({ data }) => {
             state.customers = {
                 loading: false,

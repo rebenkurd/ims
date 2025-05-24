@@ -102,8 +102,8 @@ class SupplierController extends Controller
     public function getSuppliersForSelect()
     {
         $suppliers = Supplier::query()
-            ->select('id', 'supplier_name as name')
-            ->orderBy('supplier_name')
+            ->select('id', 'name')
+            ->orderBy('name')
             ->get();
 
         return response()->json($suppliers);

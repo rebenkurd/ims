@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('unit')->nullable();
             $table->integer('per_carton')->default(0);
+            $table->integer('lot_number')->default(0)->nullable();
             $table->integer('minimum_qty');
             $table->date('expire_date')->nullable();
             $table->string('barcode')->nullable();

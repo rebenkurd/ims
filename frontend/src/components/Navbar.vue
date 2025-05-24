@@ -4,16 +4,16 @@
           <div class="flex h-16 items-center justify-between">
             <button @click="emit('toggle-sidebar')" type="button" class="relative rounded-full  p-1 text-gray-700  cursor-pointer">
                   <span class="absolute -inset-1.5" />
-                  <span class="sr-only">View notifications</span>
+                  <span class="sr-only">Toggle Sidebar</span>
                   <Bars3Icon class="size-6" aria-hidden="true" />
             </button>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
-                <button type="button" class="relative rounded-full  p-1 text-gray-700 hover:text-gray-900 cursor-pointer">
+                <!-- <button type="button" class="relative rounded-full  p-1 text-gray-700 hover:text-gray-900 cursor-pointer">
                   <span class="absolute -inset-1.5" />
                   <span class="sr-only">View notifications</span>
                   <BellIcon class="size-6" aria-hidden="true" />
-                </button>
+                </button> -->
   
                 <!-- Profile dropdown -->
                 <Menu as="div" class="relative ml-3">
@@ -53,30 +53,32 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useStore } from '../store'
-import router from '../router';
+// import router from '../router';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
   const store = useStore();
-
-
+const router = useRouter();
   const currentUser = computed(()=> store.user.data)
   
 
   const userNavigation = [
-    { name: 'Your Profile', href: '#', },
-    { name: 'Settings', href: '#', },
+  //   { name: 'Your Profile', href: '#', },
+  //   { name: 'Settings', href: '#', },
   ]
 
 
   const emit = defineEmits(['toggle-sidebar'])
 
-  const logout = ()=>{
-    store.logout()
-    .then(()=>{
-       router.push({name:'login'})
-    })
-
-    }
+const logout = async () => {
+  try {
+    await store.logout();
+    window.location.href = '/login';
+    // router.push({name:'login'}); // Use the composition API router
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+}
 </script>
 
 <style>

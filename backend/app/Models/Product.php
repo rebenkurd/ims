@@ -14,7 +14,7 @@ class Product extends Model
         'code', 'name', 'brand_id', 'category_id', 'unit', 'per_carton', 'minimum_qty', 'expire_date',
         'barcode', 'description', 'image', 'price', 'tax', 'purchase_price', 'tax_type', 'profit_margin',
         'sales_price', 'final_price', 'discount_type', 'discount', 'current_opening_stock', 'adjust_stock',
-        'adjustment_note', 'created_by', 'status'
+        'adjustment_note', 'created_by', 'status','lot_number'
     ];
 
     public function category()

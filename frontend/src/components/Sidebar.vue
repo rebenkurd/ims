@@ -8,20 +8,19 @@
         </div>
 
         <nav class="flex-1 overflow-y-auto">
-            <router-link :to="{ name: 'app.dashboard' }"
-                class="sidebar-item">
+            <!-- Dashboard - Visible to all roles -->
+            <router-link :to="{ name: 'app.dashboard' }" class="sidebar-item">
                 <HomeIcon class="w-6 h-6 mr-3 text-gray-400" />
                 <span class="sidebar-item-text">Dashboard</span>
             </router-link>
 
-
-            <!-- Product -->
-            <div class="relative">
+            <!-- Products - Admin only -->
+            <div v-if="store.user.role_id === 1" class="relative">
                 <div @click="toggleProductDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isProductDropdownOpen }">
                     <div class="flex items-center">
-                        <ListBulletIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <Square3Stack3DIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Products</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -60,14 +59,14 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Product -->
-            <!-- Purchase -->
-            <div class="relative">
+
+            <!-- Purchases - Admin and Purchaser -->
+            <div v-if="store.user.role_id === 1 || store.user.role_id === 3" class="relative">
                 <div @click="togglePurchaseDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isPurchaseDropdownOpen }">
                     <div class="flex items-center">
-                        <UsersIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <SquaresPlusIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Purchases</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -90,14 +89,14 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Purchase -->
-            <!-- Sale -->
-            <div class="relative">
+
+            <!-- Sales - Admin and Saler -->
+            <div v-if="store.user.role_id === 1 || store.user.role_id === 2" class="relative">
                 <div @click="toggleSaleDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isSaleDropdownOpen }">
                     <div class="flex items-center">
-                        <UsersIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <ShoppingCartIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Sales</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -120,9 +119,9 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Sale -->
-            <!-- User -->
-            <div class="relative">
+
+            <!-- Users - Admin only -->
+            <div v-if="store.user.role_id === 1" class="relative">
                 <div @click="toggleUserDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isUserDropdownOpen }">
@@ -150,14 +149,14 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! User -->
-            <!-- Supplier -->
-            <div class="relative">
+
+            <!-- Suppliers - Admin and Purchaser -->
+            <div v-if="store.user.role_id === 1 || store.user.role_id === 3" class="relative">
                 <div @click="toggleSupplierDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isSupplierDropdownOpen }">
                     <div class="flex items-center">
-                        <UsersIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <UserPlusIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Suppliers</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -180,14 +179,14 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Supplier -->
-            <!-- Customer -->
-            <div class="relative">
+
+            <!-- Customers - Admin and Saler -->
+            <div v-if="store.user.role_id === 1 || store.user.role_id === 2" class="relative">
                 <div @click="toggleCustomerDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isCustomerDropdownOpen }">
                     <div class="flex items-center">
-                        <UsersIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <UserGroupIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Customers</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -210,14 +209,14 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Customer -->
-            <!-- Setting -->
-            <div class="relative">
+
+            <!-- Settings - Admin only -->
+            <div v-if="store.user.role_id === 1" class="relative">
                 <div @click="toggleSettingDropdown"
                     class="flex items-center justify-between transition-colors sidebar-item"
                     :class="{ 'bg-gray-700': isSettingDropdownOpen }">
                     <div class="flex items-center">
-                        <UsersIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <Cog6ToothIcon class="w-6 h-6 mr-3 text-gray-400" />
                         <span class="sidebar-item-text">Settings</span>
                     </div>
                     <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
@@ -236,20 +235,105 @@
                     </div>
                 </transition>
             </div>
-            <!-- !!! Setting -->
+
+            <!-- Reports - Role-specific -->
+            <div class="relative">
+                <!-- Admin sees all reports -->
+                <div v-if="store.user.role_id === 1" @click="toggleReportDropdown"
+                    class="flex items-center justify-between transition-colors sidebar-item"
+                    :class="{ 'bg-gray-700': isReportDropdownOpen }">
+                    <div class="flex items-center">
+                        <ClipboardDocumentIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <span class="sidebar-item-text">Reports</span>
+                    </div>
+                    <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
+                        :class="{ 'rotate-180': isReportDropdownOpen }" />
+                </div>
+                
+                <!-- Saler sees only sale report -->
+                <div v-else-if="store.user.role_id === 2" @click="toggleReportDropdown"
+                    class="flex items-center justify-between transition-colors sidebar-item"
+                    :class="{ 'bg-gray-700': isReportDropdownOpen }">
+                    <div class="flex items-center">
+                        <ClipboardDocumentIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <span class="sidebar-item-text">Reports</span>
+                    </div>
+                    <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
+                        :class="{ 'rotate-180': isReportDropdownOpen }" />
+                </div>
+                
+                <!-- Purchaser sees only purchase report -->
+                <div v-else-if="store.user.role_id === 3" @click="toggleReportDropdown"
+                    class="flex items-center justify-between transition-colors sidebar-item"
+                    :class="{ 'bg-gray-700': isReportDropdownOpen }">
+                    <div class="flex items-center">
+                        <ClipboardDocumentIcon class="w-6 h-6 mr-3 text-gray-400" />
+                        <span class="sidebar-item-text">Reports</span>
+                    </div>
+                    <ChevronDownIcon class="w-5 h-5 text-gray-50 transition-transform duration-300"
+                        :class="{ 'rotate-180': isReportDropdownOpen }" />
+                </div>
+
+                <transition enter-active-class="transition duration-300 ease-out"
+                    enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+                    leave-active-class="transition duration-200 ease-in"
+                    leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+                    <div v-if="isReportDropdownOpen" class="bg-gray-700 rounded-md shadow-sm mx-1 mb-2">
+                        <!-- Admin sees all reports -->
+                        <template v-if="store.user.role_id === 1">
+                            <router-link :to="{name:'app.purchase_report'}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                                Purchase Report
+                            </router-link>
+                            <router-link :to="{name:'app.sale_report'}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                                Sale Report
+                            </router-link>
+                            <router-link :to="{name:'app.expired_product_report'}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                                Expired Product Report
+                            </router-link>
+                        </template>
+                        
+                        <!-- Saler sees only sale report -->
+                        <template v-else-if="store.user.role_id === 2">
+                            <router-link :to="{name:'app.sale_report'}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                                Sale Report
+                            </router-link>
+                        </template>
+                        
+                        <!-- Purchaser sees only purchase report -->
+                        <template v-else-if="store.user.role_id === 3">
+                            <router-link :to="{name:'app.purchase_report'}"
+                                class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                                Purchase Report
+                            </router-link>
+                        </template>
+                    </div>
+                </transition>
+            </div>
         </nav>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from '../store'
 import {
     HomeIcon,
     UsersIcon,
-    ChartBarIcon,
-    ListBulletIcon,
-    ChevronDownIcon
+    ChevronDownIcon,
+    UserPlusIcon,
+    UserGroupIcon,
+    ShoppingCartIcon,
+    SquaresPlusIcon,
+    ClipboardDocumentIcon,
+    Cog6ToothIcon,
+    Square3Stack3DIcon
 } from '@heroicons/vue/24/outline'
+
+const store = useStore()
 
 const isProductDropdownOpen = ref(false)
 const isUserDropdownOpen = ref(false)
@@ -258,6 +342,7 @@ const isSaleDropdownOpen = ref(false)
 const isSupplierDropdownOpen = ref(false)
 const isCustomerDropdownOpen = ref(false)
 const isSettingDropdownOpen = ref(false)
+const isReportDropdownOpen = ref(false)
 
 const toggleProductDropdown = () => isProductDropdownOpen.value = !isProductDropdownOpen.value;
 const toggleUserDropdown = () => isUserDropdownOpen.value = !isUserDropdownOpen.value;
@@ -266,6 +351,5 @@ const toggleSaleDropdown = () => isSaleDropdownOpen.value = !isSaleDropdownOpen.
 const toggleSupplierDropdown = () => isSupplierDropdownOpen.value = !isSupplierDropdownOpen.value;
 const toggleCustomerDropdown = () => isCustomerDropdownOpen.value = !isCustomerDropdownOpen.value;
 const toggleSettingDropdown = () => isSettingDropdownOpen.value = !isSettingDropdownOpen.value;
-
-
+const toggleReportDropdown = () => isReportDropdownOpen.value = !isReportDropdownOpen.value;
 </script>

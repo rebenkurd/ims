@@ -74,6 +74,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useStore } from '../../store';
 import { useProductStore } from '../../store/product';
 import { useCategoryStore } from '../../store/category';
+import { useBrandStore } from '../../store/brand';
 import Spinner from '../../components/core/Spinner.vue';
 import CustomInput from '../../components/core/CustomInput.vue';
 import router from '../../router';
@@ -82,6 +83,7 @@ import { useToast } from "vue-toastification"
 const toast = useToast();
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
+const brandStore = useBrandStore();
 const store = useStore();
 const route = useRoute();
 
@@ -115,7 +117,7 @@ onMounted(() => {
     if (route.params.id) {
         getProduct(route.params.id);
     }
-    store.getBrands();
+    brandStore.getBrands();
     categoryStore.getCategorys();
 });
 
@@ -128,7 +130,8 @@ const getProduct = (id) => {
 };
 
 const brandOptions = computed(() => {
-    return store.brands.data.map(item => ({
+    
+    return brandStore.brands.data.map(item => ({
         value: item.id,
         label: item.name 
     }));

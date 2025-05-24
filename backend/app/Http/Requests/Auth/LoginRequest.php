@@ -37,29 +37,29 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
-    {
-        $this->ensureIsNotRateLimited();
+public function authenticate(): void
+{
+    $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+    if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
+        RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'username' => __('auth.failed'),
-            ]);
-        }
-
-        if(Auth::user()->role_id != 1){
-            RateLimiter::clear($this->throttleKey());
-            Auth::logout();
-            throw ValidationException::withMessages([
-                'username' => __('auth.role'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
+        throw ValidationException::withMessages([
+            'username' => __('auth.failed'),
+        ]);
     }
 
+    $allowedRoles = [1, 2, 3]; 
+    if(!in_array(Auth::user()->role_id, $allowedRoles)) {
+        RateLimiter::clear($this->throttleKey());
+        Auth::logout();
+        throw ValidationException::withMessages([
+            'username' => __('auth.role'),
+        ]);
+    }
+
+    RateLimiter::clear($this->throttleKey());
+}
     /**
      * Ensure the login request is not rate limited.
      *

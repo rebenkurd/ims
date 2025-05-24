@@ -17,7 +17,7 @@ class PaymentInvoice extends Model
 
     public function saleInvoice()
     {
-        return $this->belongsTo(SalesInvoice::class, 'sale_invoice_id');
+        return $this->belongsTo(SaleInvoice::class, 'sale_invoice_id');
     }
 
     public function purchaseInvoice()

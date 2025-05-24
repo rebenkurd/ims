@@ -1,8 +1,9 @@
 
 const state = ()=>({
         user: {
-            token: sessionStorage.getItem('token'),
-            data:{}
+            token: sessionStorage.getItem('token') || null,
+            data:{},
+            role_id:1,
         },
       
     })

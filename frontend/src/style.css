@@ -56,5 +56,40 @@
 
     /*!!Auth form Style */
 
+
+
+/* Financial Summery Card Style */
+.financial-summary {
+  @apply mb-8;
+}
+
+.financial-card {
+  @apply p-4 rounded-lg shadow-sm flex items-center justify-between;
+  transition: all 0.3s ease;
+}
+
+.financial-card:hover {
+  @apply shadow-md transform scale-[1.01];
+}
+
+.financial-icon {
+  @apply p-3 rounded-full mr-4;
+}
+
+.financial-title {
+  @apply text-sm font-medium text-gray-600;
+}
+
+.financial-amount {
+  @apply text-xl font-semibold text-gray-800 mt-1;
+}
+/* Financial Summery Card Style */
+/* Trend Indicator Summery Card Style */
+.trend-indicator {
+  @apply ml-4;
+}
+/* Trend Indicator Summery Card Style */
+    
+
 }
 

@@ -18,6 +18,7 @@ class SaleController extends Controller
 {
     public function index()
     {
+        
         $search = request('search', false);
         $per_page = request('per_page', 10);
         $sort_field = request('sort_field', 'updated_at');

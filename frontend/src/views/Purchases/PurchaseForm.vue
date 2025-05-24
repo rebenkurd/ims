@@ -270,6 +270,8 @@ const searchProducts = () => {
 
 watch(() => cartStore.searchResults, (results) => {
   searchResults.value = results;
+  console.log(results);
+  
 });
 
 const selectProduct = (product) => {

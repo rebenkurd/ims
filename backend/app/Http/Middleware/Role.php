@@ -7,19 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class Role
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if(Auth::check() && Auth::user() -> role_id==1){
-            return $next($request);
-        }
-
-        return response()->json(['message' => 'You Don\'t have permission perform this action!!'], 403);
+public function handle($request, Closure $next, ...$roles)
+{
+    if (!Auth::check()) {
+        abort(403);
     }
+
+    if (!in_array(Auth::user()->role_id, $roles)) {
+        abort(403);
+    }
+
+    return $next($request);
+}
 }

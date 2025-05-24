@@ -1,3 +1,4 @@
+import router from '../router';
 import axiosClient from './../axios';
 
 export async function getUser(state) {
@@ -5,6 +6,7 @@ export async function getUser(state) {
     await axiosClient.get('/user')
   .then((response)=>{
       state.user.data = response.data.user;
+      state.user.role_id = response.data.user.role_id;            
       return response;
     })
   } catch (error) {
@@ -16,8 +18,13 @@ export async function getUser(state) {
 export async function login(state, data) {
   try {
     const response = await axiosClient.post('/login', data);
-    state.user.data = response.data.user;
-    state.user.token = response.data.token;
+        // Set all user data at once
+        state.user = {
+            token: response.data.token,
+            data: response.data.user,
+            role_id: response.data.role_id
+        };
+            
     sessionStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
@@ -28,10 +35,14 @@ export async function login(state, data) {
 
 export async function logout(state) {
   try {
-    await axiosClient.get('/logout');    
-    state.token = null;
-    state.data = {};
-    sessionStorage.removeItem('token');
+   const response = await axiosClient.get('/logout');    
+        state.user = {
+            token: null,
+            data: {},
+            role_id: null
+        };
+    sessionStorage.clear()
+    return response;
   } catch (error) {
     console.error("Logout failed:", error);
     throw error;

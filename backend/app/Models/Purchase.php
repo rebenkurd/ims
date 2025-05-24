@@ -47,6 +47,10 @@ class Purchase extends Model
     {
         return $this->hasMany(PurchaseInvoice::class);
     }
+    public function invoice()
+    {
+        return $this->belongsTo(PurchaseInvoice::class);
+    }
 
 
     public function createdBy()

@@ -81,7 +81,7 @@ export async function getSupplier(id) {
 export async function getSuppliersForSelect(state) {
     state.suppliers.loading = true;
     try {
-        await axiosClient.get('/suppliers/select')
+        await axiosClient.get('/suppliers-for-select')
         .then(({ data }) => {
             state.suppliers = {
                 loading: false,

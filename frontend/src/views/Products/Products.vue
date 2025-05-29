@@ -20,8 +20,8 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import ProductsTable from './ProductsTable.vue';
-import ProductModal from './ProductModal.vue';
+import ProductsTable from '@views/Products/ProductsTable.vue';
+import ProductModal from '@views/Products/ProductModal.vue';
 import { useRouter } from 'vue-router';
 
 const router= useRouter()

@@ -1,8 +1,8 @@
 
 
 import { defineStore } from "pinia";
-import { getBrands, createBrand, deleteBrand,updateBrand,getBrand,getBrandds } from "./actions.js";
-import state from "./state.js";
+import { getBrands, createBrand, deleteBrand,updateBrand,getBrand,getBrandds } from "@/store/brand/actions.js";
+import state from "@/store/brand/state.js";
 
  export const useBrandStore = defineStore('BrandStore',{
     state: state,

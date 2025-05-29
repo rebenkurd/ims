@@ -1,8 +1,8 @@
 
 
 import { defineStore } from "pinia";
-import { getProducts, createProduct, deleteProduct, getProduct,updateProduct,updateProductStatus ,fetchItems,searchItems,clearSearch} from "./actions.js";
-import state from "./state";
+import { getProducts, createProduct, deleteProduct, getProduct,updateProduct,updateProductStatus ,fetchItems,searchItems,clearSearch} from "@store/product/actions.js";
+import state from "@store/product/state";
 
  export const useProductStore = defineStore('ProductStore',{
     state: state,

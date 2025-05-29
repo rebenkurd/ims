@@ -1,7 +1,7 @@
 <script setup>
   import { ref } from 'vue';
-  import GuestLayout from '../components/GuestLayout.vue'
-  import {useStore} from '../store'
+  import GuestLayout from '@components/GuestLayout.vue'
+  import {useStore} from '@store'
   import { useRouter } from 'vue-router';
   import { XMarkIcon } from '@heroicons/vue/24/outline';
   import { useToast } from "vue-toastification"

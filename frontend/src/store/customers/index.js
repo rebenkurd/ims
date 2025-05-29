@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { getCustomers, createCustomer, deleteCustomer, updateCustomer, getCustomer, getCustomersForSelect } from "./actions.js";
-import state from "./state.js";
+import { getCustomers, createCustomer, deleteCustomer, updateCustomer, getCustomer, getCustomersForSelect } from "@store/customers/actions.js";
+import state from "@store/customers/state.js";
 
 export const useCustomerStore = defineStore('CustomerStore', {
     state: state,

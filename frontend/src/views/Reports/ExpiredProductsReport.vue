@@ -86,8 +86,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useReportStore } from '../../store/report/';
-import axiosClient from '../../axios';
+import { useReportStore } from '@store/report/';
+import axiosClient from '@/axios';
 
 const store = useReportStore();
 

@@ -52,7 +52,7 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
   import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { useStore } from '../store'
+import { useStore } from '@/store'
 // import router from '../router';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';

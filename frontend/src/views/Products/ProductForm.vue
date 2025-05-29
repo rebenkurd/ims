@@ -71,13 +71,13 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from '../../store';
-import { useProductStore } from '../../store/product';
-import { useCategoryStore } from '../../store/category';
-import { useBrandStore } from '../../store/brand';
-import Spinner from '../../components/core/Spinner.vue';
-import CustomInput from '../../components/core/CustomInput.vue';
-import router from '../../router';
+import { useStore } from '@store';
+import { useProductStore } from '@store/product';
+import { useCategoryStore } from '@store/category';
+import { useBrandStore } from '@store/brand';
+import Spinner from '@components/core/Spinner.vue';
+import CustomInput from '@components/core/CustomInput.vue';
+import router from '@router';
 import { useToast } from "vue-toastification"
 
 const toast = useToast();

@@ -1,5 +1,5 @@
 // store/company_profile/actions.js
-import axiosClient from './../../axios';
+import axiosClient from '@/axios';
 export async function getCompanyProfile(state) {
     state.companyProfile.loading = true;
     try {

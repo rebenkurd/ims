@@ -211,15 +211,15 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useSaleStore } from '../../store/sale';
-import { useCustomerStore } from '../../store/customers';
-import { useProductStore } from '../../store/product';
-import Spinner from '../../components/core/Spinner.vue';
-import CustomInput from '../../components/core/CustomInput.vue';
-import router from '../../router';
+import { useSaleStore } from '@store/sale';
+import { useCustomerStore } from '@store/customers';
+import { useProductStore } from '@store/product';
+import Spinner from '@components/core/Spinner.vue';
+import CustomInput from '@components/core/CustomInput.vue';
+import router from '@router';
 import { useToast } from "vue-toastification"
 import { TrashIcon } from '@heroicons/vue/24/outline';
-import { useCartStore } from '../../store/cart/sale_index.js'
+import { useCartStore } from '@store/cart/sale_index.js'
 import { watchEffect } from 'vue';
 
 const toast = useToast();

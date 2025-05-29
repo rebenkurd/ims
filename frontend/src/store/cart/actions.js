@@ -1,5 +1,5 @@
-import axiosClient from '../../axios.js';
-import state from '../state.js';
+import axiosClient from '@/axios.js';
+import state from '@store/cart/state.js';
 
 
 export function addItem(state,item) {

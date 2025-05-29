@@ -1,8 +1,8 @@
 
 
 import { defineStore } from "pinia";
-import { getSuppliers, createSupplier, deleteSupplier,updateSupplier,getSupplier,getSuppliersForSelect } from "./actions.js";
-import state from "./state.js";
+import { getSuppliers, createSupplier, deleteSupplier,updateSupplier,getSupplier,getSuppliersForSelect } from "@store/suppliers/actions.js";
+import state from "@store/suppliers/state.js";
 
  export const useSupplierStore = defineStore('SupplierStore',{
     state: state,

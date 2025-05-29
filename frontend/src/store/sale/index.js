@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { getSales, createSale, deleteSale, getSale, updateSale, getSaleInvoice } from "./actions.js";
-import state from "./state";
+import { getSales, createSale, deleteSale, getSale, updateSale, getSaleInvoice } from "@store/sale/actions.js";
+import state from "@store/sale/state";
 
 export const useSaleStore = defineStore('SaleStore', {
   state: state,

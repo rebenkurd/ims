@@ -20,7 +20,7 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import BrandTable from './BrandsTable.vue';
+import BrandTable from '@views/Brands/BrandsTable.vue';
 import { useRouter } from 'vue-router';
 
 const router= useRouter()

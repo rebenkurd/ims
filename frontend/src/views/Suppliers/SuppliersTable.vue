@@ -156,13 +156,13 @@
 
 <script setup>
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import Spinner from '../../components/core/Spinner.vue';
+import Spinner from '@components/core/Spinner.vue';
 import { computed, onMounted, ref } from 'vue';
-import { useSupplierStore } from '../../store/suppliers';
-import { PER_PAGE } from '../../constant';
-import TableHeaderCell from '../../components/core/table/TableHeaderCell.vue';
+import { useSupplierStore } from '@store/suppliers';
+import { PER_PAGE } from '@views/constant';
+import TableHeaderCell from '@components/core/table/TableHeaderCell.vue';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import router from '../../router';
+import router from '@router';
 import { useToast } from 'vue-toastification';
 import Swal from 'sweetalert2'
 

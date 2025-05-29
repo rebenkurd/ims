@@ -51,9 +51,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCompanyProfileStore } from '../store/company_profile';
-import Spinner from '../components/core/Spinner.vue';
-import CustomInput from '../components/core/CustomInput.vue';
+import { useCompanyProfileStore } from '@store/company_profile';
+import Spinner from '@components/core/Spinner.vue';
+import CustomInput from '@components/core/CustomInput.vue';
 import { useToast } from "vue-toastification"
 
 const toast = useToast();

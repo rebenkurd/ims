@@ -1,4 +1,4 @@
-import axiosClient from '../../axios.js';
+import axiosClient from '@/axios.js';
 
 
 export async function getPurchases(state,url=null,search='',perPage=10,sortField,sortDirection){

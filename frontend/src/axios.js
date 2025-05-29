@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {useStore} from './store';
-import router from './router';
+import {useStore} from '@store';
+import router from '@router';
 
 
 const axiosClient = axios.create({

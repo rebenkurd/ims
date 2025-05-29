@@ -31,10 +31,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useCategoryStore } from '../../store/category';
-import Spinner from '../../components/core/Spinner.vue';
-import CustomInput from '../../components/core/CustomInput.vue';
-import router from '../../router';
+import { useCategoryStore } from '@store/category';
+import Spinner from '@components/core/Spinner.vue';
+import CustomInput from '@components/core/CustomInput.vue';
+import router from '@router';
 import { useToast } from "vue-toastification"
 
 const toast = useToast();

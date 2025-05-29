@@ -144,10 +144,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useReportStore } from '../../store/report/';
-import axiosClient from '../../axios';
-import Spinner from '../../components/core/Spinner.vue';
-import TableHeaderCell from '../../components/core/table/TableHeaderCell.vue';
+import { useReportStore } from '@store/report/';
+import axiosClient from '@/axios';
+import Spinner from '@components/core/Spinner.vue';
+import TableHeaderCell from '@components/core/table/TableHeaderCell.vue';
 
 const store = useReportStore();
 const customers = ref([]);

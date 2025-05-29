@@ -25,10 +25,10 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
-import Sidebar from './Sidebar.vue';
-import Navbar from './Navbar.vue';
-import { useStore } from '../store';
-import Spinner from './core/Spinner.vue';
+import Sidebar from '@components/Sidebar.vue';
+import Navbar from '@components/Navbar.vue';
+import { useStore } from '@/store';
+import Spinner from '@components/core/Spinner.vue';
 
 const store = useStore();
 

@@ -20,8 +20,8 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import PurchasesTable from './PurchasesTable.vue';
-import PurchaseModal from './PurchaseModal.vue';
+import PurchasesTable from '@views/Purchases/PurchasesTable.vue';
+import PurchaseModal from '@views/Purchases/PurchaseModal.vue';
 import { useRouter } from 'vue-router';
 
 const router= useRouter()

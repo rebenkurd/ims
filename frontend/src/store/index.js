@@ -1,8 +1,8 @@
 
 
 import { defineStore } from "pinia";
-import { login, logout, getUser } from "./actions";
-import state from "./state";
+import { login, logout, getUser } from "@store/actions";
+import state from "@store/state";
 
  export const useStore = defineStore('store',{
     state: state,

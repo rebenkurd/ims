@@ -156,14 +156,14 @@
 
 <script setup>
 import { Bars3Icon, EllipsisVerticalIcon, PencilIcon, PlusIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import Spinner from '../../components/core/Spinner.vue';
+import Spinner from '@components/core/Spinner.vue';
 import { computed, onMounted, ref } from 'vue';
-import { useCategoryStore } from '../../store/category';
-import { PER_PAGE } from '../../constant';
-import TableHeaderCell from '../../components/core/table/TableHeaderCell.vue';
+import { useCategoryStore } from '@store/category';
+import { PER_PAGE } from '@views/constant';
+import TableHeaderCell from '@components/core/table/TableHeaderCell.vue';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-import router from '../../router';
+import router from '@router';
 import { useToast } from 'vue-toastification';
 import Swal from 'sweetalert2'
 

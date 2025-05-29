@@ -133,12 +133,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useDashboardStore } from '../store/dashboard';
-import FinancialSummary from '../components/dashboard/FinancialSummary.vue';
-import SummaryCard from '../components/dashboard/SummaryCard.vue';
-import SectionTitle from '../components/dashboard/SectionTitle.vue';
-import SalesChart from '../components/dashboard/SalesChart.vue';
-import Spinner from '../components/core/Spinner.vue';
+import { useDashboardStore } from '@store/dashboard';
+import FinancialSummary from '@components/dashboard/FinancialSummary.vue';
+import SummaryCard from '@components/dashboard/SummaryCard.vue';
+import SectionTitle from '@components/dashboard/SectionTitle.vue';
+import SalesChart from '@components/dashboard/SalesChart.vue';
+import Spinner from '@components/core/Spinner.vue';
 
 const dashboardStore = useDashboardStore();
 const loading = ref(true);

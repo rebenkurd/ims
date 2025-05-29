@@ -92,8 +92,8 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import SectionTitle from './SectionTitle.vue';
-import TrendIndicator from './TrendIndicator.vue';
+import SectionTitle from '@components/dashboard/SectionTitle.vue';
+import TrendIndicator from '@components/dashboard/TrendIndicator.vue';
 
 const props = defineProps({
   financialData: {

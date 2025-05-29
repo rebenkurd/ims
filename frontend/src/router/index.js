@@ -1,34 +1,34 @@
 // make that code if user dose not have permesion directly send user to not found page
 import {createRouter, createWebHistory} from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
-import Login from '../views/Login.vue'
-import RequestResetPassword from '../views/RequestResetPassword.vue';
-import ResetPassword from '../views/ResetPassword.vue';
-import AppLayout from '../components/AppLayout.vue';
-import { useStore } from '../store'
-import NotFound from '../views/NotFound.vue'
-import Products from '../views/Products/Products.vue'
-import ProductForm from '../views/Products/ProductForm.vue'
-import Users from '../views/Users/Users.vue'
-import UserForm from '../views/Users/UserForm.vue'
-import Categories from '../views/Categories/Categories.vue'
-import CategoryForm from '../views/Categories/CategoryForm.vue'
-import Brands from '../views/Brands/Brands.vue'
-import BrandForm from '../views/Brands/BrandForm.vue'
-import Purchases from '../views/Purchases/Purchases.vue'
-import PurchaseForm from '../views/Purchases/PurchaseForm.vue'
-import PurchaseInvoice from '../views/Purchases/Invoice.vue'
-import Sales from '../views/Sales/Sales.vue'
-import SaleForm from '../views/Sales/SaleForm.vue'
-import SaleInvoice from '../views/Sales/Invoice.vue'
-import Suppliers from '../views/Suppliers/Suppliers.vue'
-import SupplierForm from '../views/Suppliers/SupplierForm.vue'
-import Customers from '../views/Customers/Customers.vue'
-import CustomerForm from '../views/Customers/CustomerForm.vue'
-import CompanyProfile from '../views/CompanyProfile.vue'
-import PurchaseReport from '../views/Reports/PurchaseReport.vue';
-import SaleReport from '../views/Reports/SaleReport.vue';
-import ExpiredProductsReport from '../views/Reports/ExpiredProductsReport.vue';
+import Dashboard from '@views/Dashboard.vue'
+import Login from '@views/Login.vue'
+import RequestResetPassword from '@views/RequestResetPassword.vue';
+import ResetPassword from '@views/ResetPassword.vue';
+import AppLayout from '@components/AppLayout.vue';
+import { useStore } from '@/store'
+import NotFound from '@views/NotFound.vue'
+import Products from '@views/Products/Products.vue'
+import ProductForm from '@views/Products/ProductForm.vue'
+import Users from '@views/Users/Users.vue'
+import UserForm from '@views/Users/UserForm.vue'
+import Categories from '@views/Categories/Categories.vue'
+import CategoryForm from '@views/Categories/CategoryForm.vue'
+import Brands from '@views/Brands/Brands.vue'
+import BrandForm from '@views/Brands/BrandForm.vue'
+import Purchases from '@views/Purchases/Purchases.vue'
+import PurchaseForm from '@views/Purchases/PurchaseForm.vue'
+import PurchaseInvoice from '@views/Purchases/Invoice.vue'
+import Sales from '@views/Sales/Sales.vue'
+import SaleForm from '@views/Sales/SaleForm.vue'
+import SaleInvoice from '@views/Sales/Invoice.vue'
+import Suppliers from '@views/Suppliers/Suppliers.vue'
+import SupplierForm from '@views/Suppliers/SupplierForm.vue'
+import Customers from '@views/Customers/Customers.vue'
+import CustomerForm from '@views/Customers/CustomerForm.vue'
+import CompanyProfile from '@views/CompanyProfile.vue'
+import PurchaseReport from '@views/Reports/PurchaseReport.vue';
+import SaleReport from '@views/Reports/SaleReport.vue';
+import ExpiredProductsReport from '@views/Reports/ExpiredProductsReport.vue';
 
 const routes = [
     {

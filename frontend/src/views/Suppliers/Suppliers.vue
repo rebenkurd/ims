@@ -19,7 +19,7 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import SuppliersTable from './SuppliersTable.vue';
+import SuppliersTable from '@views/Suppliers/SuppliersTable.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()

@@ -20,7 +20,7 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import UsersTable from './UsersTable.vue';
+import UsersTable from '@views/Users/UsersTable.vue';
 import { useRouter } from 'vue-router';
 
 const router= useRouter()

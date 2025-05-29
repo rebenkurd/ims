@@ -1,5 +1,4 @@
-import router from '../router';
-import axiosClient from './../axios';
+import axiosClient from '@/axios';
 
 export async function getUser(state) {
   try {

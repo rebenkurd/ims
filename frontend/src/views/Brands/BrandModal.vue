@@ -63,9 +63,9 @@ import {
     DialogPanel,
     DialogTitle,
 } from '@headlessui/vue'
-import Spinner from '../../components/core/Spinner.vue';
-import { useStore } from '../../store';
-import CustomInput from '../../components/core/CustomInput.vue';
+import Spinner from '@components/core/Spinner.vue';
+import { useStore } from '@store';
+import CustomInput from '@components/core/CustomInput.vue';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const store = useStore()

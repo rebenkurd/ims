@@ -1,8 +1,8 @@
 
 
 import { defineStore } from "pinia";
-import { getCategories, createCategory, deleteCategory,updateCategory,getCategory,getCategorys } from "./actions.js";
-import state from "./state.js";
+import { getCategories, createCategory, deleteCategory,updateCategory,getCategory,getCategorys } from "@store/category/actions.js";
+import state from "@store/category/state.js";
 
  export const useCategoryStore = defineStore('CategoryStore',{
     state: state,

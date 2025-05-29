@@ -154,7 +154,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { usePurchaseStore } from '../../store/purchase';
+import { usePurchaseStore } from '@store/purchase';
 import { useToast } from "vue-toastification";
 
 const toast = useToast();

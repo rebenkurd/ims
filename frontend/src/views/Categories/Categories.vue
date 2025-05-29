@@ -20,7 +20,7 @@
 
 <script setup>
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import CategoriesTable from './CategoriesTable.vue';
+import CategoriesTable from '@views/Categories/CategoriesTable.vue';
 import { useRouter } from 'vue-router';
 
 const router= useRouter()

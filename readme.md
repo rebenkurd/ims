@@ -1,5 +1,5 @@
 
-# Full-Stack Application
+# Invertory Managment System
 
 A modern web application built with Laravel 12 (Backend API) and Vue.js 3 (Frontend).
 

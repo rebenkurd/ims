@@ -49,6 +49,7 @@ export async function createUser(user){
     form.append('phone', user.phone);
     form.append('mobile', user.mobile);
     form.append('dob', user.dob);
+    form.append('role_id', user.role_id);
     form.append('image', user.image);
     user = form;
   }
@@ -67,6 +68,7 @@ export async function updateUser(user){
     form.append('phone', user.phone);
     form.append('mobile', user.mobile);
     form.append('dob', user.dob);
+    form.append('role_id', user.role_id);
     form.append('image', user.image);
     form.append('_method', 'PUT'); 
     

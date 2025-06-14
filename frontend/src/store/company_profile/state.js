@@ -2,7 +2,7 @@
 const state = () => ({
     companyProfile: {
         loading: false,
-        data: null // Start with null to handle initial state
+        data: null 
     }
 });
 

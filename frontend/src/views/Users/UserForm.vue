@@ -19,11 +19,14 @@
                 <CustomInput type="date" v-model="user.dob" label="Date of Berth" class="mb-2"  />  
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                <CustomInput type="password" v-model="user.password" label="Password" class="mb-2" :required="true" />       
+                <CustomInput type="password" v-model="user.password" label="Password" class="mb-2" :required="!user.id ?true:false" />       
                 <!-- <CustomInput type="password" v-model="user.confirmation_password" label="Confirmation Password" class="mb-2" :required="true" />        -->
                 <CustomInput type="file" v-model="user.image" label="Image" class="mb-2"
                 @change="file => user.image = file" info="Max Width/Height: 1000px * 1000px & Size: 1MB"
+                :image="user.image_url"
                  />
+                 
+                <CustomInput type="select" v-model="user.role_id" class="ml-2" label="User Role" :options="userRoleOptions" />
             </div>
 
             <hr class="text-gray-200 my-4">
@@ -42,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@store/user';
 import Spinner from '@components/core/Spinner.vue';
@@ -66,26 +69,36 @@ const DEFAULT_USER = {
     mobile: '',
     dob: '',
     image: null,
-
+    image_url: null,
+    role_id: null
 };
 
 const user = ref({ ...DEFAULT_USER });
 
-
+const userRoleOptions = ref([
+  { value: 1, label: 'Admin' },
+  { value: 2, label: 'Saler' },
+  { value: 3, label: 'Purchaser' }
+]);
 
 onMounted(() => {
     if (route.params.id) {
         getUser(route.params.id);
+    }else{
+        resetForm();
     }
 });
+
+
+const resetForm = () => {
+    user.value = { ...DEFAULT_USER };
+};
 
 const getUser = (id) => {
   loading.value = true;
   userStore.getUser(id).then(( {data} ) => {
     user.value = data;
     loading.value = false;
-    console.log(data);
-    
   });
 };
 
@@ -119,8 +132,15 @@ const onSubmit = () => {
 };
 
 const goBack = () => {
+    resetForm();
     router.push({ name: 'app.user_list' }); 
 };
 
-
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getUser(newId);
+    } else {
+        resetForm();
+    }
+});
 </script>

@@ -69,6 +69,29 @@ export const useCartStore = defineStore('cart', {
       this.payments = purchase.payments || [];
       this.paidAmount = this.payments.reduce((sum, payment) => sum + parseFloat(payment.amount), 0);
     },
+        syncWithSale(sale) {
+      this.clearItems();
+      
+      if (sale.items && Array.isArray(sale.items) && sale.items.length > 0) {
+        sale.items.forEach(item => {
+          this.addItemDirect({
+            id: item.product_id,
+            name: item.product_name,
+            quantity: item.quantity,
+            salePrice: item.sale_price,
+            discount: item.discount,
+            unit_price: item.unit_price,
+            total_amount: item.total_amount
+          });
+        });
+      }
+      
+      this.discountAll = sale.discount_all || 0;
+      this.discountType = sale.discount_type || 'fixed';
+      this.note = sale.note || '';
+      this.payments = sale.payments || [];
+      this.paidAmount = this.payments.reduce((sum, payment) => sum + parseFloat(payment.amount), 0);
+    },
     
     async searchProducts(query) {
       try {

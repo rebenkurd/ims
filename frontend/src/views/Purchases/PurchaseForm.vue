@@ -117,10 +117,12 @@
 
               <div class="flex justify-between mb-2">
                 <div class="font-semibold">Discount on All</div>
-              <div>$ 
+              <div>
+                {{ purchase.discount_type !== 'fixed' ? '%': '$' }} 
                 {{ 
                   (cartStore.discountType === 'Per%' ? 
-                  (cartStore.subtotal || 0) * (Number(cartStore.discountAll)) / 100 : Number(cartStore.discountAll || 0)).toFixed(2) }}</div>
+                  (cartStore.subtotal || 0) * (Number(cartStore.discountAll)) / 100 : Number(cartStore.discountAll || 0)).toFixed(2) 
+                  }}</div>
               </div>
 
               <div class="flex justify-between font-bold text-lg">
@@ -259,11 +261,16 @@ onMounted(() => {
   if (route.params.id) {
     getPurchase(route.params.id);
   } else {
+    resetForm();
     cartStore.resetInvoice();
   }
   supplierStore.getSuppliersForSelect();
 });
 
+const resetForm = () => {
+    purchase.value = { ...DEFAULT_PURCHASE };
+    cartStore.resetInvoice();
+};
 const searchProducts = () => {
   cartStore.searchProducts(searchQuery.value);
 };
@@ -440,6 +447,8 @@ const onSubmit = async () => {
 };
 
 const goBack = () => {
+  resetForm();
+  cartStore.resetInvoice();
   router.push({ name: 'app.purchase_list' });
 };
 
@@ -463,6 +472,15 @@ watch(
     purchase.value.due_balance = newDueBalance;
   }
 );
+
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getPurchase(newId);
+    } else {
+        resetForm();
+        cartStore.resetInvoice();
+    }
+});
 
 watchEffect(() => {
   purchase.value.items = cartStore.items.map(item => {

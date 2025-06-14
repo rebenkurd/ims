@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBrandStore } from '@store/brand';
 import Spinner from '@components/core/Spinner.vue';
@@ -55,8 +55,15 @@ const brand = ref({ ...DEFAULT_BRAND });
 onMounted(() => {
     if (route.params.id) {
         getBrand(route.params.id);
+    }else{
+        resetForm();
     }
 });
+
+const resetForm = () => {
+    brand.value = { ...DEFAULT_BRAND };
+};
+
 
 const getBrand = (id) => {
   loading.value = true;
@@ -96,8 +103,19 @@ const onSubmit = () => {
 };
 
 const goBack = () => {
+    resetForm();
     router.push({ name: 'app.brand_list' }); 
 };
 
+
+
+
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getBrand(newId);
+    } else {
+        resetForm();
+    }
+});
 
 </script>

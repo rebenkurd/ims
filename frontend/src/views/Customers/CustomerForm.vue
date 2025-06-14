@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCustomerStore } from '@store/customers';
 import Spinner from '@components/core/Spinner.vue';
@@ -81,9 +81,14 @@ const statusOptions = ref([
 onMounted(() => {
     if (route.params.id) {
         getCustomer(route.params.id);
+    }else{
+        resetForm();
     }
 });
 
+const resetForm = () => {
+    customer.value = { ...DEFAULT_CUSTOMER };
+};
 const getCustomer = (id) => {
     loading.value = true;
     customerStore.getCustomer(id).then(({ data }) => {
@@ -118,8 +123,17 @@ const onSubmit = () => {
         });
     }
 };
-
 const goBack = () => {
+    resetForm();
     router.push({ name: 'app.customer_list' }); 
 };
+
+watch(() => route.params.id, (newId) => {
+if (newId) {
+    getCustomer(newId);
+} else {
+    resetForm();
+}
+});
+
 </script>

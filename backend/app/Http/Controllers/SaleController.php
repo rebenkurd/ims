@@ -18,7 +18,7 @@ class SaleController extends Controller
 {
     public function index()
     {
-        
+
         $search = request('search', false);
         $per_page = request('per_page', 10);
         $sort_field = request('sort_field', 'updated_at');
@@ -55,6 +55,7 @@ class SaleController extends Controller
                         'product_id' => $item['product_id'],
                         'quantity' => $item['quantity'],
                         'discount' => $item['discount'],
+                        'sales_price' => $item['sales_price'],
                         'unit_price' => $item['unit_price'],
                         'total_price' => $item['total_amount']
                     ]);
@@ -126,6 +127,7 @@ class SaleController extends Controller
                         'product_id' => $item['product_id'],
                         'quantity' => $item['quantity'],
                         'discount' => $item['discount'],
+                        'sales_price' => $item['sales_price'],
                         'total_price' => $item['total_amount'],
                         'unit_price' => $item['unit_price'],
                     ]);

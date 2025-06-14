@@ -20,7 +20,7 @@
 
     <!-- Supplier and Company Info -->
     <div class="grid grid-cols-2 gap-8 mb-8">
-      <div>
+      <div class="">
         <h2 class="text-lg font-semibold mb-2">Supplier:</h2>
         <p class="font-medium">{{ purchase.supplier.name }}</p>
         <p class="text-gray-600">{{ purchase.supplier.phone }}</p>
@@ -28,10 +28,10 @@
       </div>
       <div class="text-right">
         <h2 class="text-lg font-semibold mb-2">Your Company:</h2>
-        <p class="font-medium">Your Company Name</p>
-        <p class="text-gray-600">123 Business Street</p>
-        <p class="text-gray-600">City, State 10001</p>
-        <p class="text-gray-600">Phone: (123) 456-7890</p>
+        <p class="font-medium">{{ company.company_name }}</p>
+        <p class="text-gray-600">{{ company.address }}</p>
+        <p class="text-gray-600">{{ company.city }} , {{ company.state }} {{ company.postcode }} </p>
+        <p class="text-gray-600">Phone: {{ company.phone }} </p>
       </div>
     </div>
 
@@ -156,17 +156,35 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { usePurchaseStore } from '@store/purchase';
 import { useToast } from "vue-toastification";
+import { useCompanyProfileStore } from '@store/company_profile';
 
 const toast = useToast();
 const router = useRouter();
 const route = useRoute();
 const purchaseStore = usePurchaseStore();
+const companyProfileStore = useCompanyProfileStore();
 
 const purchase = ref({
   supplier: {},
   items: [],
   payments: []
 });
+
+const DEFAULT_COMPANY = {
+    company_name: '',
+    mobile: '',
+    email: '',
+    phone: '',
+    website: '',
+    country: '',
+    state: '',
+    city: '',
+    postcode: '',
+    address: '',
+    logo: null,
+};
+
+const company = ref({ ...DEFAULT_COMPANY });
 
 
 
@@ -175,8 +193,19 @@ const loading = ref(false);
 
 onMounted(() => {
   fetchInvoiceData();
+  getCompanyProfile();
 });
-
+const getCompanyProfile = async () => {
+    try {
+        loading.value = true;
+        const companyData = await companyProfileStore.getCompanyProfile();
+        company.value = companyData ? { ...companyData } : { ...DEFAULT_COMPANY };        
+    } catch (error) {
+        toast.error("Failed to load company profile");
+    } finally {
+        loading.value = false;
+    }
+};
 const fetchInvoiceData = async () => {
   try {
     loading.value = true;

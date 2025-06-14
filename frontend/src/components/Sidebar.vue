@@ -232,6 +232,10 @@
                             class="block px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
                             Company Profile
                         </router-link>
+                        <!-- <button @click="downloadBackup"
+                            class="block w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-800 transition-colors">
+                            Database Backup
+                        </button> -->
                     </div>
                 </transition>
             </div>
@@ -332,8 +336,14 @@ import {
     Cog6ToothIcon,
     Square3Stack3DIcon
 } from '@heroicons/vue/24/outline'
+import axiosClient from '@/axios.js';
+import axios from 'axios';
+import { useToast } from "vue-toastification"
+
 
 const store = useStore()
+const toast = useToast()
+const isLoading = ref(false)
 
 const isProductDropdownOpen = ref(false)
 const isUserDropdownOpen = ref(false)
@@ -352,4 +362,56 @@ const toggleSupplierDropdown = () => isSupplierDropdownOpen.value = !isSupplierD
 const toggleCustomerDropdown = () => isCustomerDropdownOpen.value = !isCustomerDropdownOpen.value;
 const toggleSettingDropdown = () => isSettingDropdownOpen.value = !isSettingDropdownOpen.value;
 const toggleReportDropdown = () => isReportDropdownOpen.value = !isReportDropdownOpen.value;
+
+const downloadBackup = async () => {
+    const toast = useToast();
+    try {
+        // Show loading
+        const loadingToast = toast.info('Starting backup process...', { timeout: false });
+
+        const response = await axios.get('/api/backup/download', {
+            responseType: 'blob',
+            timeout: 300000 // 5 minutes
+        });
+
+        // Verify response
+        if (!response.data || response.data.size < 1024) {
+            throw new Error(`Received empty backup file (${response.data?.size || 0} bytes)`);
+        }
+
+        // Create download
+        const url = window.URL.createObjectURL(response.data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `backup-${new Date().toISOString().split('T')[0]}.zip`);
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        setTimeout(() => {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            toast.dismiss(loadingToast);
+            toast.success('Backup downloaded successfully!');
+        }, 100);
+
+    } catch (error) {
+        console.error('Backup error:', error);
+        
+        let errorMessage = 'Backup failed';
+        if (error.response?.data?.message) {
+            errorMessage += `: ${error.response.data.message}`;
+        } else {
+            errorMessage += `: ${error.message}`;
+        }
+        
+        toast.error(errorMessage);
+        
+        // For debugging:
+        if (error.response?.data?.details) {
+            console.error('Server error details:', error.response.data.details);
+        }
+    }
+};
+
 </script>

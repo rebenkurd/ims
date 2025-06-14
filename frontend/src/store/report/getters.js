@@ -1,16 +1,19 @@
 export default {
-  isLoading: (state) => state.loading,
-  reportData: (state) => state.data,
-  pagination: (state) => state.meta,
-  currentFilters: (state) => state.filters,
-  currentReportType: (state) => state.current_report,
+  totalAmount: (state) => {
+    const items = state[state.filters.report_type === 'purchase' ? 'purchases' : 
+                 state.filters.report_type === 'sale' ? 'sales' : 
+                 state.filters.report_type === 'expiredProducts' ? 'expiredProducts' : 
+                 'worldBankReports'];
+    return items.reduce((sum, item) => sum + parseFloat(item.total_amount || item.price || 0), 0);
+  },
   
-  // Specific data getters
-  totalAmount: (state) => state.data.reduce((sum, item) => sum + parseFloat(item.total || 0), 0),
-  totalPaid: (state) => state.data.reduce((sum, item) => sum + parseFloat(item.paid || 0), 0),
-  totalDue: (state) => state.data.reduce((sum, item) => sum + parseFloat(item.due || 0), 0),
-  
-  // Report-specific getters
-  purchaseReportData: (state) => state.current_report === state.report_types.PURCHASE ? state.data : [],
-  salesReportData: (state) => state.current_report === state.report_types.SALES ? state.data : []
-}
+  activeReportData: (state) => {
+    switch(state.filters.report_type) {
+      case 'purchase': return state.purchases;
+      case 'sale': return state.sales;
+      case 'expiredProducts': return state.expiredProducts;
+      case 'worldBank': return state.worldBankReports;
+      default: return [];
+    }
+  }
+};

@@ -42,24 +42,24 @@ class CompanyProfileController extends Controller
 public function update(CompanyProfileRequest $request)
 {
     try {
-        $data = $request->validated(); // Use validated data instead of all()
+        $data = $request->validated();
 
         // Handle file upload
-        if ($request->hasFile('company_logo')) {
-            $relativePath = $this->saveImage($request->file('company_logo'), 'company');
-            $data['company_logo_path'] = URL::to('/storage/'.$relativePath);
+        if ($request->hasFile('logo')) {
+            $relativePath = $this->saveImage($request->file('logo'), 'company');
+            $data['logo'] = URL::to('/storage/'.$relativePath);
 
             // Delete old logo if exists
             $existing = CompanyProfile::first();
-            if ($existing && $existing->company_logo_path) {
-                $oldImagePath = str_replace(URL::to('/storage/'), '', $existing->company_logo_path);
+            if ($existing && $existing->logo) {
+                $oldImagePath = str_replace(URL::to('/storage/'), '', $existing->logo);
                 Storage::disk('public')->delete($oldImagePath);
             }
         } else {
             // Keep existing logo path if no new file was uploaded
             $existing = CompanyProfile::first();
-            if ($existing && $existing->company_logo_path) {
-                $data['company_logo_path'] = $existing->company_logo_path;
+            if ($existing && $existing->logo) {
+                $data['logo'] = $existing->logo;
             }
         }
 
@@ -80,4 +80,6 @@ public function update(CompanyProfileRequest $request)
         ], 500);
     }
 }
+
+
 }

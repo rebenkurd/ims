@@ -27,6 +27,7 @@ class UserListResource extends JsonResource
             'dob' => $this->dob,
             'mobile' => $this->mobile,
             'role' => $this->role->name,
+            'role_id' => $this->role_id,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

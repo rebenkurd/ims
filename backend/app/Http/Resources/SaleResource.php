@@ -39,7 +39,7 @@ class SaleResource extends JsonResource
                         'unit_price' => $item->unit_price,
                         'total_amount' => $item->total_price,
                         'discount' => $item->discount,
-                        'sale_price' => $item->product->sale_price,
+                        'sale_price' => $item->product->sales_price,
                         'product' => $item->product ? [
                             'id' => $item->product->id,
                             'name' => $item->product->name,

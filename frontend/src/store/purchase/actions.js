@@ -42,7 +42,7 @@ export async function createPurchase(purchase) {
   let requestData;
   
   if (purchase.image instanceof File) {
-    // Handle file upload case with FormData
+
     const form = new FormData();
     form.append('created_at', purchase.created_at);
     form.append('purchase_status', purchase.purchase_status);
@@ -78,12 +78,9 @@ export async function createPurchase(purchase) {
     
     requestData = form;
   } else {
-    // Handle standard JSON data case
     requestData = {
       ...purchase,
-      // Ensure nested objects are properly structured
       items: purchase.items || [],
-      // payments: purchase.payments || []
     };
   }
   

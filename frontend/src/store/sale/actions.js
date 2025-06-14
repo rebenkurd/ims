@@ -53,7 +53,7 @@ export async function createSale(sale) {
       sale.items.forEach((item, index) => {
         form.append(`items[${index}][product_id]`, item.product_id);
         form.append(`items[${index}][quantity]`, item.quantity);
-        form.append(`items[${index}][sale_price]`, item.sale_price);
+        form.append(`items[${index}][sales_price]`, item.sales_price);
         form.append(`items[${index}][discount]`, item.discount);
         form.append(`items[${index}][unit_price]`, item.unit_price);
         form.append(`items[${index}][total_amount]`, item.total_amount);

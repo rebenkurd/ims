@@ -15,11 +15,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
                     <CustomInput v-model="company.phone" label="Phone" class="mb-2" />
                     <CustomInput v-model="company.website" label="Website" class="mb-2" />
-                    <CustomInput type="file" 
-                        v-model="company.company_logo" 
+                    <CustomInput 
+                        type="file" 
                         label="Company Logo" 
                         class="mb-2"
-                        @change="file => company.company_logo = file"
+                        @change="handleFileChange"
                         info="Max Width/Height: 1000px * 1000px & Size: 1MB"
                     />
                 </div>
@@ -72,57 +72,61 @@ const DEFAULT_COMPANY = {
     city: '',
     postcode: '',
     address: '',
-    company_logo: null,
-    company_logo_path: ''
+    logo: null,
 };
 
 const company = ref({ ...DEFAULT_COMPANY });
 
 onMounted(() => {
-    getCompanyProfile();
+    getCompanyProfile();   
 });
 
 const getCompanyProfile = async () => {
     try {
         loading.value = true;
         const companyData = await companyProfileStore.getCompanyProfile();
-        company.value = companyData ? { ...companyData } : { ...DEFAULT_COMPANY };
+        company.value = companyData ? { ...companyData } : { ...DEFAULT_COMPANY };        
     } catch (error) {
         toast.error("Failed to load company profile");
     } finally {
         loading.value = false;
     }
 };
+
+const handleFileChange = (event) => {
+    company.value.logo = event.target.files[0];
+};
+
 const onSubmit = () => {
     loading.value = true;
     
-    const formData = company
-    // Append all fields except the logo path when we have a new logo
-//     Object.keys(company.value).forEach(key => {
-//         if (company.value[key] !== null && company.value[key] !== undefined) {
-//             if (key === 'company_logo') {
-//                 if (company.value[key] instanceof File) {
-//                     // formData.append(key, company.value[key]);    
-// }
-// } else if (key !== 'company_logo_path' || !company.value.company_logo) {
-//                 formData.append(key, company.value[key]);
-//             }
-//         }
-//     });
-
-
-    companyProfileStore.updateCompanyProfile(formData).then((response) => {
-        loading.value = false;
-        toast.success(response.message);
-        // Update local state with the returned data
-        company.value = {
-            ...company.value,
-            ...response.data,
-            company_logo: null // Reset the file input
-        };
-    }).catch((error) => {
-        loading.value = false;
-        toast.error(error.response?.data?.message || "Failed to update company profile");
+    const formData = new FormData();
+    
+    // Append all fields including the logo if it's a File
+    Object.keys(company.value).forEach(key => {
+        if (company.value[key] !== null && company.value[key] !== undefined) {
+            if (key === 'logo' && company.value[key] instanceof File) {
+                formData.append(key, company.value[key]);
+            } else {
+                formData.append(key, company.value[key]);
+            }
+        }
     });
+
+    companyProfileStore.updateCompanyProfile(formData)
+        .then((response) => {
+            loading.value = false;
+            toast.success(response.message);
+            // Update the company data but don't reset the logo
+            company.value = {
+                ...company.value,
+                ...response.data
+            };
+        })
+        .catch((error) => {
+            loading.value = false;
+            toast.error(error.response?.data?.message || "Failed to update company profile");
+        });
 };
+
 </script>

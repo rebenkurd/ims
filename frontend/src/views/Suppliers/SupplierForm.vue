@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSupplierStore } from '@store/suppliers';
 import Spinner from '@components/core/Spinner.vue';
@@ -79,6 +79,11 @@ const DEFAULT_SUPPLIER = {
 
 const supplier = ref({ ...DEFAULT_SUPPLIER });
 
+const resetForm = () => {
+    supplier.value = { ...DEFAULT_SUPPLIER };
+};
+
+
 const paymentTypeOptions = ref([
     { value: 1, label: 'Cash' },
     { value: 2, label: 'Credit' },
@@ -93,6 +98,8 @@ const statusOptions = ref([
 onMounted(() => {
     if (route.params.id) {
         getSupplier(route.params.id);
+    }else{
+        resetForm();
     }
 });
 
@@ -134,6 +141,14 @@ const onSubmit = () => {
 };
 
 const goBack = () => {
-    router.push({ name: 'app.supplier_list' }); 
+    resetForm();
+    router.push({ name: 'app.supplier_list' });
 };
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getSupplier(newId);
+    } else {
+        resetForm();
+    }
+});
 </script>

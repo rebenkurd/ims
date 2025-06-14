@@ -16,25 +16,26 @@ export async function getCompanyProfile(state) {
         throw error;
     }
 }
+
+
 export async function updateCompanyProfile(companyData) {
-    const formData = new FormData();
     
-    // Convert FormData to work with nested objects
+    // Convert companyData to work with nested objects
     for (const [key, value] of Object.entries(companyData)) {
         if (value !== null && value !== undefined) {
             if (value instanceof File) {
-                formData.append(key, value);                
+                companyData.append(key, value);                
             } else if (typeof value === 'object' && !(value instanceof File)) {
-                formData.append(key, JSON.stringify(value));
+                companyData.append(key, JSON.stringify(value));
             } else {
-                formData.append(key, value);
+                companyData.append(key, value);
             }
         }
     }
 
-    debugger
+    // debugger
     
-    const response = await axiosClient.post('/company-profile', formData, {
+    const response = await axiosClient.post('/company-profile', companyData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

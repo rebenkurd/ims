@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DatabaseExportController;
 use App\Http\Controllers\ExpiredProductsReportController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
@@ -30,7 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 // Saler-only routes
-Route::middleware(['auth:sanctum' ,'saler'])->group(function () {
+Route::middleware(['auth:sanctum' ,'role:1,2'])->group(function () {
     Route::apiResource('/sales', SaleController::class)->only(['index', 'store', 'show']);
     Route::get('sales/{sale}/payments', [SaleController::class, 'getPayments']);
     Route::get('/sales/{sale}/invoices/{invoice}', [SaleController::class, 'getInvoice']);
@@ -42,7 +43,7 @@ Route::middleware(['auth:sanctum' ,'saler'])->group(function () {
 });
 
 // Purchaser-only routes
-Route::middleware(['auth:sanctum','purchaser'])->group(function () {
+Route::middleware(['auth:sanctum','role:1,3'])->group(function () {
     Route::apiResource('/purchases', PurchaseController::class)->only(['index', 'store', 'show']);
     Route::get('purchases/{purchase}/payments', [PurchaseController::class, 'getPayments']);
     Route::get('/purchases/{purchase}/invoices/{invoice}', [PurchaseController::class, 'getInvoice']);
@@ -55,7 +56,7 @@ Route::middleware(['auth:sanctum','purchaser'])->group(function () {
 
 
 // Admin-only routes
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:1,2'])->group(function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/products', ProductController::class);
     Route::apiResource('/brands', BrandController::class);
@@ -83,6 +84,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/sale-report', [SaleReportController::class, 'index']);
     Route::get('/customers-for-select', [CustomerController::class, 'getCustomersForSelect']);
     Route::get('/expired-products-report', [ExpiredProductsReportController::class, 'index']);
+    Route::get('/backup/download', [DatabaseExportController::class, 'download']);
 });
 
 

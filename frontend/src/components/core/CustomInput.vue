@@ -15,9 +15,12 @@
       <template v-else-if="type === 'file'">
         <div> 
           <input :type="type" :name="name" :required="required" @change="handleFileChange"
-            :class="inputClasses" :placeholder="label" />
+            :class="inputClasses" :placeholder="label"  />
           <div v-if="imageUrl" class="mt-2 p-2">
             <img :src="imageUrl" alt="Selected Image" class="w-32 h-32 object-cover rounded-md border" />
+          </div>
+          <div v-if="!imageUrl" class="mt-2 p-2">
+            <img :src="image" :alt="name" class="w-32 h-32 object-cover rounded-md border" />
           </div>
         </div>
       </template>
@@ -81,6 +84,7 @@ const props = defineProps({
     default: 'text',
   },
   name: String,
+  image: String,
   required:{
     type: Boolean,
     default: false,

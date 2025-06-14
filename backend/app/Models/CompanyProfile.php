@@ -20,6 +20,6 @@ class CompanyProfile extends Model
         'city',
         'postcode',
         'address',
-        'company_logo_path',
+        'logo',
     ];
 }

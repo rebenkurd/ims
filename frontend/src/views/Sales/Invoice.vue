@@ -14,7 +14,7 @@
             </span>
           </div>
           <p class="text-gray-600">Date: {{ formatDate(sale.created_at) }}</p>
-          <p class="text-gray-600">Due Date: {{ formatDate(invoice.due_date) }}</p>
+          <!-- <p class="text-gray-600">Due Date: {{ formatDate(invoice.due_date) }}</p> -->
         </div>
       </div>
 
@@ -27,13 +27,13 @@
           <p class="text-gray-600">{{ sale.customer.address }}</p>
           <p class="text-gray-600">{{ sale.customer.city }}, {{ sale.customer.state }} {{ sale.customer.postcode }}</p>
         </div>
-        <div class="text-right">
-          <h2 class="text-lg font-semibold mb-2">Your Company:</h2>
-          <p class="font-medium">Your Company Name</p>
-          <p class="text-gray-600">123 Business Street</p>
-          <p class="text-gray-600">City, State 10001</p>
-          <p class="text-gray-600">Phone: (123) 456-7890</p>
-        </div>
+      <div class="text-right">
+        <h2 class="text-lg font-semibold mb-2">Your Company:</h2>
+        <p class="font-medium">{{ company.company_name }}</p>
+        <p class="text-gray-600">{{ company.address }}</p>
+        <p class="text-gray-600">{{ company.city }} , {{ company.state }} {{ company.postcode }} </p>
+        <p class="text-gray-600">Phone: {{ company.phone }} </p>
+      </div>
       </div>
 
       <!-- Sale Details -->
@@ -88,10 +88,10 @@
             <span class="font-medium">Discount:</span>
             <span>{{ sale.discount_type=="fixed"?formatCurrency(invoice.discount):"%"+invoice.discount }}</span>
           </div>
-          <div class="flex justify-between mb-2">
+          <!-- <div class="flex justify-between mb-2">
             <span class="font-medium">Tax:</span>
             <span>{{ formatCurrency(invoice.tax) }}</span>
-          </div>
+          </div> -->
           <div class="flex justify-between text-lg font-bold border-t pt-2 mt-2">
             <span>Total:</span>
             <span>{{ formatCurrency(invoice.final_amount) }}</span>
@@ -147,11 +147,13 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSaleStore } from '@store/sale';
 import { useToast } from "vue-toastification";
+import { useCompanyProfileStore } from '@store/company_profile';
 
 const toast = useToast();
 const router = useRouter();
 const route = useRoute();
 const saleStore = useSaleStore();
+const companyProfileStore = useCompanyProfileStore();
 
 const sale = ref({
   customer: {},
@@ -159,13 +161,42 @@ const sale = ref({
   payments: []
 });
 
+
+const DEFAULT_COMPANY = {
+    company_name: '',
+    mobile: '',
+    email: '',
+    phone: '',
+    website: '',
+    country: '',
+    state: '',
+    city: '',
+    postcode: '',
+    address: '',
+    logo: null,
+};
+
+const company = ref({ ...DEFAULT_COMPANY });
+
 const invoice = ref({});
 const loading = ref(false);
 
 onMounted(() => {
   fetchInvoiceData();
-});
+  getCompanyProfile();
 
+});
+const getCompanyProfile = async () => {
+    try {
+        loading.value = true;
+        const companyData = await companyProfileStore.getCompanyProfile();
+        company.value = companyData ? { ...companyData } : { ...DEFAULT_COMPANY };        
+    } catch (error) {
+        toast.error("Failed to load company profile");
+    } finally {
+        loading.value = false;
+    }
+};
 const fetchInvoiceData = async () => {
   try {
     loading.value = true;

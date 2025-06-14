@@ -26,7 +26,7 @@ class CompanyProfileResource extends JsonResource
             "country" => $this->country,
             "city" => $this->city,
             "postcode" =>$this->postcode,
-            "company_logo_path" =>$this->company_logo_path,
+            "logo" => $this->logo,
             "website" =>$this->website,
         ];
 }

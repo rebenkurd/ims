@@ -13,9 +13,9 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 <CustomInput v-model="product.name" label="Product Name" class="mb-2" :required="true" />
-                <CustomInput type="select" :addModal="true" :searchable="true" v-model="product.brand_id" label="Brand" :options="brandOptions"
+                <CustomInput type="select" :addModal="false" :searchable="true" v-model="product.brand_id" label="Brand" :options="brandOptions"
                     />                
-                <CustomInput type="select" :searchable="true" v-model="product.category_id" label="Category" :options="categoryOptions" :addModal="true" :required="true"
+                <CustomInput type="select" :searchable="true" v-model="product.category_id" label="Category" :options="categoryOptions" :addModal="false" :required="true"
                     />                
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -45,12 +45,12 @@
                 <CustomInput :disabled="true" v-model="product.final_price" label="Final Price" class="mb-2"/>
             </div>
 
-            <hr class="text-gray-200 my-4">
+            <!-- <hr class="text-gray-200 my-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 <CustomInput type="number" v-model="product.current_opening_stock" label="Current Opening Stock" class="mb-2" />
                 <CustomInput type="number" v-model="product.adjust_stock" label="Adjust Stock" class="mb-2" />
                 <CustomInput type="textarea" v-model="product.adjustment_note" label="Adjustment Note" class="mb-2" />
-            </div>
+            </div> -->
 
 
             <hr class="text-gray-200 my-4">
@@ -116,10 +116,16 @@ const product = ref({ ...DEFAULT_PRODUCT });
 onMounted(() => {
     if (route.params.id) {
         getProduct(route.params.id);
+    }else{
+        resetForm();
     }
     brandStore.getBrands();
     categoryStore.getCategorys();
 });
+
+const resetForm = () => {
+    product.value = { ...DEFAULT_PRODUCT };
+};
 
 const getProduct = (id) => {
   loading.value = true;
@@ -185,6 +191,7 @@ const onSubmit = () => {
 };
 
 const goBack = () => {
+    resetForm();
     router.push({ name: 'app.product_list' }); 
 };
 
@@ -222,5 +229,13 @@ const applyDiscount = () => {
     product.value.final_price = Math.max(0, originalPrice - discountAmount);
   }
 };
+
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getProduct(newId);
+    } else {
+        resetForm();
+    }
+});
 
 </script>

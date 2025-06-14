@@ -18,36 +18,40 @@
       <!-- Original Summary Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <SummaryCard 
+          v-if="store.user.role_id === 1 || store.user.role_id === 3" 
           title="TOTAL SALES" 
           :value="summaryData.total_sales" 
           icon="currency-dollar"
         />
         <SummaryCard 
+          v-if="store.user.role_id === 1 || store.user.role_id === 2" 
           title="TOTAL PURCHASES" 
           :value="summaryData.total_purchases" 
           icon="trending-up"
         />
         <SummaryCard 
+          v-if="store.user.role_id === 1 || store.user.role_id === 3" 
           title="TOTAL CUSTOMERS" 
           :value="summaryData.total_customers" 
           icon="users"
         />
         <SummaryCard 
+          v-if="store.user.role_id === 1 || store.user.role_id === 2" 
           title="TOTAL SUPPLIERS" 
           :value="summaryData.total_suppliers" 
           icon="truck"
         />
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+      <div v-if="store.user.role_id === 1 || store.user.role_id === 2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
         <!-- Sales Chart -->
-        <div class="bg-white p-4 rounded-lg shadow">
+        <div v-if="store.user.role_id === 1 || store.user.role_id === 2" class="bg-white p-4 rounded-lg shadow">
           <SectionTitle title="MONTHLY SALES" />
           <SalesChart :data="salesChartData" />
         </div>
 
         <!-- Recently Added Products -->
-        <div class="bg-white p-4 rounded-lg shadow">
+        <div v-if="store.user.role_id === 1" class="bg-white p-4 rounded-lg shadow">
           <SectionTitle title="RECENTLY ADDED PRODUCTS" />
           <div class="overflow-x-auto">
             <table class="table-auto w-full">
@@ -74,7 +78,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
+      <div v-if="store.user.role_id === 1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
         <!-- Expired Products -->
         <div class="bg-white p-4 rounded-lg shadow" v-if="expiredProducts.length > 0">
           <SectionTitle title="EXPIRED PRODUCTS" />
@@ -134,6 +138,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useDashboardStore } from '@store/dashboard';
+import { useStore } from '@store/';
 import FinancialSummary from '@components/dashboard/FinancialSummary.vue';
 import SummaryCard from '@components/dashboard/SummaryCard.vue';
 import SectionTitle from '@components/dashboard/SectionTitle.vue';
@@ -149,6 +154,7 @@ const recentProducts = ref([]);
 const expiredProducts = ref([]);
 const lowStockProducts = ref([]);
 
+const store = useStore();
 onMounted(async () => {
   try {
     await dashboardStore.fetchDashboardData();

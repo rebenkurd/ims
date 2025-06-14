@@ -117,7 +117,8 @@
 
               <div class="flex justify-between mb-2">
                 <div class="font-semibold">Discount on All</div>
-              <div>$ 
+              <div>
+                {{ sale.discount_type !== 'fixed' ? '%': '$' }} 
                 {{ 
                   (cartStore.discountType === 'Per%' ? 
                   (cartStore.subtotal || 0) * (Number(cartStore.discountAll)) / 100 : Number(cartStore.discountAll || 0)).toFixed(2) }}</div>
@@ -219,7 +220,7 @@ import CustomInput from '@components/core/CustomInput.vue';
 import router from '@router';
 import { useToast } from "vue-toastification"
 import { TrashIcon } from '@heroicons/vue/24/outline';
-import { useCartStore } from '@store/cart/sale_index.js'
+import { useCartStore } from '@store/cart'
 import { watchEffect } from 'vue';
 
 const toast = useToast();
@@ -246,7 +247,7 @@ const DEFAULT_SALE = {
   subtotal: 0,
   due_balance: 0,
   total: 0,
-  sale_status: 'completed',
+  sale_status: 'pending',
   items: [],
   payments: []
 };
@@ -258,11 +259,17 @@ onMounted(() => {
   
   if (route.params.id) {
     getSale(route.params.id);
-  } else {
+  } else{
+    resetForm();
     cartStore.resetInvoice();
   }
   customerStore.getCustomersForSelect();
 });
+
+const resetForm = () => {
+    sale.value = { ...DEFAULT_SALE };
+    cartStore.resetInvoice();
+};
 
 const searchProducts = () => {
   cartStore.searchProducts(searchQuery.value);
@@ -352,14 +359,11 @@ const getSale = (id) => {
 const saleStatusOptions = ref([
   { value: 'completed', label: 'Completed' },
   { value: 'pending', label: 'Pending' },
-  { value: 'returned', label: 'Returned' }
+  // { value: 'returned', label: 'Returned' }
 ]);
 
 const paymentTypeOptions = ref([
   { value: 'cash', label: 'Cash' },
-  { value: 'credit', label: 'Credit' },
-  { value: 'card', label: 'Card' },
-  { value: 'bank', label: 'Bank Transfer' }
 ]);
 
 const customersOptions = computed(() => {
@@ -439,6 +443,8 @@ const onSubmit = async () => {
 };
 
 const goBack = () => {
+  resetForm();
+  cartStore.resetInvoice();
   router.push({ name: 'app.sale_list' });
 };
 
@@ -463,6 +469,7 @@ watch(
   }
 );
 
+
 watchEffect(() => {
   sale.value.items = cartStore.items.map(item => {
     return {
@@ -475,4 +482,14 @@ watchEffect(() => {
     };
   });
 });
+
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getSale(newId);
+    } else {
+        resetForm();
+        cartStore.resetInvoice();
+    }
+});
+
 </script>

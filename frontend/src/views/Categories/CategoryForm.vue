@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryStore } from '@store/category';
 import Spinner from '@components/core/Spinner.vue';
@@ -55,8 +55,14 @@ const category = ref({ ...DEFAULT_CATEGORY });
 onMounted(() => {
     if (route.params.id) {
         getCategory(route.params.id);
+    }else{
+        resetForm();
     }
 });
+
+const resetForm = () => {
+    category.value = { ...DEFAULT_CATEGORY };
+};
 
 const getCategory = (id) => {
   loading.value = true;
@@ -96,8 +102,17 @@ const onSubmit = () => {
 };
 
 const goBack = () => {
+    resetForm();
     router.push({ name: 'app.category_list' }); 
 };
+
+watch(() => route.params.id, (newId) => {
+    if (newId) {
+        getCategory(newId);
+    } else {
+        resetForm();
+    }
+});
 
 
 </script>

@@ -29,6 +29,7 @@ import CompanyProfile from '@views/CompanyProfile.vue'
 import PurchaseReport from '@views/Reports/PurchaseReport.vue';
 import SaleReport from '@views/Reports/SaleReport.vue';
 import ExpiredProductsReport from '@views/Reports/ExpiredProductsReport.vue';
+import DatabaseExport from '@views/DatabaseExport.vue';
 
 const routes = [
     {
@@ -178,6 +179,12 @@ const routes = [
                 component: ExpiredProductsReport,
                 meta: { allowedRoles: [1] } // Admin only
             },
+            {
+                path: '/database/export',
+                name: 'app.database_export',
+                component: DatabaseExport,
+                meta: { requiresAuth: true }
+            }
         ]
     },
     {

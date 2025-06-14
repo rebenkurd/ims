@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,21 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Role
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-public function handle($request, Closure $next, ...$roles)
-{
-    if (!Auth::check()) {
-        abort(403);
-    }
+    public function handle(Request $request, Closure $next, ...$roles): Response
+    {
+        if (!Auth::check()) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
 
-    if (!in_array(Auth::user()->role_id, $roles)) {
-        abort(403);
-    }
+        $userRoleId = Auth::user()->role_id;
+        $allowedRoles = array_map('intval', $roles);
 
-    return $next($request);
-}
+        if (in_array($userRoleId, $allowedRoles)) {
+            return $next($request);
+        }
+
+        return response()->json(['message' => 'You don\'t have permission to perform this action!'], 403);
+    }
 }

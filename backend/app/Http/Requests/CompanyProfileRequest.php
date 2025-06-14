@@ -32,7 +32,7 @@ class CompanyProfileRequest extends FormRequest
         'city' => 'required|string|max:100',
         'postcode' => 'nullable|string|max:20',
         'address' => 'required|string',
-        'company_logo' => 'nullable|image|max:1024|dimensions:max_width=1000,max_height=1000',
+        'logo' => 'nullable',
     ];
     }
 }
